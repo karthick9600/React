@@ -1,0 +1,17 @@
+
+? React – Step 1: What is React? Why do we use it?
+?? What is React?
+React is a JavaScript library used to build user interfaces (UI) for web applications.
+
+?? Who created React?
+React was created by Facebook (now Meta) in 2013.
+
+?? Why React?
+?? Reusable components – Write once, use many times.
+
+? Fast updates using Virtual DOM.
+
+?? Easy to manage UI logic.
+
+?? Widely used in real-world websites (Facebook, Instagram, Netflix, etc.).
+
