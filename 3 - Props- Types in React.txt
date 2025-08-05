@@ -1,0 +1,65 @@
+ Why use PropTypes?
+Imagine you expect name to be a string, but someone passes a number.
+PropTypes will show a warning in the console. ??
+
+? 1. Install prop-types package (once per project)
+bash
+Copy
+Edit
+npm install prop-types
+? 2. Use PropTypes in Component
+jsx
+Copy
+Edit
+import PropTypes from 'prop-types';
+
+function Course(props) {
+  return (
+    <div>
+      <h2>{props.name}</h2>
+      <p>{props.price}</p>
+    </div>
+  );
+}
+
+// ?? Define expected prop types
+Course.propTypes = {
+  name: PropTypes.string,
+  price: PropTypes.string,
+};
+? Common PropTypes types
+PropTypes Type	Meaning
+PropTypes.string	Only allow string values
+PropTypes.number	Only number values
+PropTypes.bool	Only true/false
+PropTypes.array	Only arrays
+PropTypes.object	Only objects
+PropTypes.func	Only functions
+PropTypes.node	Anything renderable
+PropTypes.element	React element only
+PropTypes.any	Any type (avoid if possible)
+
+? Optional vs Required Props
+js
+Copy
+Edit
+Course.propTypes = {
+  name: PropTypes.string.isRequired, // ?? Must be passed
+  price: PropTypes.string,           // ?? Optional
+};
+? Use default values (optional)
+js
+Copy
+Edit
+Course.defaultProps = {
+  name: "Default Course",
+  price: "Free"
+};
+?? Tamil Explanation (Short):
+PropTypes :
+?? Props-  in data type  what will be  come to  React  telling method.
+
+Prop	PropTypes
+name	string
+rating	number
+show	boolean
