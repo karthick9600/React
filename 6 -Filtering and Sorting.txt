@@ -1,0 +1,58 @@
+import Course from "./Course";
+import HTML from "./assets/h.jpg";
+import css from "./assets/c.jpg";
+import js from "./assets/js.jpg";
+
+function CourseList() {
+  const courses = [
+    {
+        id:1,
+      name: "HTML",
+      price: 199,
+      image: HTML,
+      rating: 5,
+    },
+    {
+        id:2,
+      name: "CSS",
+      price: 199,
+      image: css,
+      rating: 5,
+    },
+    {  
+        id:3,
+      name: "JS",
+      price: 499,
+      image: js,
+      rating: 4,
+    },
+    {
+        id:4,
+        name:"React",
+        price:999,
+        image:js,
+        rating:5,
+    },
+  ];
+
+
+  courses.sort((x,y)=>y.price - x.price)   ///////sorting
+
+
+  const vfmCourse=courses.filter((course)=> course.price<200)   ///////filtering
+
+  const coursesList = vfmCourse.map((course, index) => (
+    <Course
+      key={index}
+      name={course.name}
+      image={course.image}
+      price={course.price}
+      rating={course.rating}
+    />
+  ));
+
+  // ? spelling correct here
+  return <>{coursesList}</>;
+}
+
+export default CourseList;
