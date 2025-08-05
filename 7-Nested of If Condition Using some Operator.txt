@@ -1,0 +1,15 @@
+ import PropTypes  from 'prop-types';
+
+function Course(props) {
+ 
+  return (  // props.name in a instead of if condition  so this is shortest way this Example of Handling missing  data
+       props.name &&  <div className="card"> 
+      <img src={props.image} alt={props.name} />
+
+      <h3>{props.name}</h3>
+      <p>{props.price}</p>
+      <p>{props.rating}</p>
+    </div>
+  );
+
+   }
