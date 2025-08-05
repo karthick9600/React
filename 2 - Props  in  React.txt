@@ -1,0 +1,43 @@
+? What is Props in React?
+In React, Props means:
+
+“Properties” that are passed from one component to another like function arguments.
+
+?? Simple Meaning:
+?? Props = Data or values sent from Parent component ? to Child component.
+
+?? Think of props like parcel delivery:
+Parent packs data ? sends it to Child ? Child opens and uses it.
+
+? Example:
+App.js (Parent)
+jsx
+Copy code
+import Course from './Course';
+
+function App() {
+  return (
+    <Course name="React" price="$199" />
+  );
+}
+
+export default App;
+Course.js (Child)
+jsx
+Copy code
+function Course(props) {
+  return (
+    <div>
+      <h2>{props.name}</h2>
+      <p>{props.price}</p>
+    </div>
+  );
+}
+
+export default Course;
+?? Output:
+
+nginx
+Copy code
+React
+$199
