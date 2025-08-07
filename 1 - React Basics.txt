@@ -1,0 +1,21 @@
+           ?? 4. Understand React Basics
+
+ Learn these core concepts:
+
+  Concept	Example
+
+JSX	Write HTML in JS: <h1>Hello</h1>
+
+Components	Reusable blocks: function Welcome() { return <h1>Hello</h1> }
+
+Props	Pass data to components
+
+State	Store data in component
+
+useState Hook	const [count, setCount] = useState(0)
+
+Events	onClick, onChange
+
+Conditional Rendering	Show/hide elements
+
+Lists and Keys	map() to loop over items
