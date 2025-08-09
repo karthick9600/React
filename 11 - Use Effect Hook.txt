@@ -1,0 +1,52 @@
+The useState hook in React is used to store and update state inside a functional component.
+Think of it like a memory inside your component — it remembers values between renders.
+
+          Syntax
+
+import { useState } from "react";
+
+const [stateVariable, setStateFunction] = useState(initialValue);
+stateVariable ? Current value of the state.
+
+setStateFunction ? Function to update the state.
+
+initialValue ? Starting value for the state.
+
+
+
+
+Example
+
+
+
+import { useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0); // initial value is 0
+
+  function increase() {
+    setCount(count + 1); // update state
+  }
+
+  return (
+    <div>
+      <h2>Count: {count}</h2>
+      <button onClick={increase}>Increment</button>
+    </div>
+  );
+}
+
+export default Counter;
+How it works
+useState(0) ? creates count with value 0.
+
+When the Increment button is clicked, setCount(count + 1) updates the value.
+
+React re-renders the component with the new count.
+
+Key Points
+Must be inside a function component (or custom hook).
+
+Not inside loops or conditionals — call at the top level.
+
+Every setState call causes the component to re-render with new data.
