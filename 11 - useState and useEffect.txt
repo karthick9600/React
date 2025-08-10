@@ -1,0 +1,54 @@
+Uses useState to store the count.
+
+Uses useEffect to automatically update the browser title whenever the count changes.
+
+Example: Counter with Title Update
+jsx
+Copy
+Edit
+import { useState, useEffect } from "react";
+
+function Counter() {
+  // useState ? state variable and its setter
+  const [count, setCount] = useState(0);
+
+  // useEffect ? side effect runs after render
+  useEffect(() => {
+    document.title = `Count: ${count}`;
+    console.log(`Document title updated to Count: ${count}`);
+  }, [count]); 
+  // [count] ? dependency array, runs when count changes
+
+  return (
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h1>Counter: {count}</h1>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <button onClick={() => setCount(count - 1)} style={{ marginLeft: "10px" }}>
+        Decrement
+      </button>
+      <button onClick={() => setCount(0)} style={{ marginLeft: "10px" }}>
+        Reset
+      </button>
+    </div>
+  );
+}
+
+export default Counter;
+How It Works
+useState
+
+count stores the current counter value.
+
+setCount updates it, causing React to re-render.
+
+useEffect
+
+Runs after every render when count changes.
+
+Updates the page title dynamically: Count: 5, Count: 6, etc.
+
+Dependency Array [count]
+
+Ensures the effect runs only when count changes.
+
+Without it, it would run after every render (even if count didn’t change).
