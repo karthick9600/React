@@ -1,0 +1,261 @@
+import Course from "./Course";
+import HTML from "./assets/h.jpg";
+import css from "./assets/c.jpg";
+import js from "./assets/js.jpg";
+import {useState,useEffect} from 'react';
+
+
+function CourseList() {
+  const [courses,setCourses] = useState([
+    {
+        id:1,
+      name: "HTML",
+      price: 199,
+      image: HTML,
+      rating: 5,
+    },
+    {
+        id:2,
+      name: "CSS",
+      price: 199,
+      image: css,
+      rating: 5,
+    },
+    {  
+        id:3,
+      name: "JS",
+      price: 499,
+      image: js,
+      rating: 4,
+    },
+    {
+        id:4,
+        name:"React",
+        price:999,
+        image:js,
+        rating:5,
+    },
+  ]);
+ 
+   const [dummy,setDummy]=useState(true);
+
+
+    useEffect(()=>{
+    console.log('useEffect called')  
+    console.log(dummy);
+
+   },[courses]); // First argument in Anonymous and Second variable  this ..(dummy)   this   name  is  dependency.  In list 
+  
+   
+
+
+  // const[dummy,setDummy]=useState([1,2,3]);
+
+  function handledDelete(id){
+    const newCourses=courses.filter((course)=>course.id !=id)
+    setCourses(newCourses)
+  }
+
+  courses.sort((x,y)=>y.rating - x.rating)    //sorting
+
+
+  const vfmCourse=courses.filter((course)=> course.price<1000)   //filtering
+
+  const coursesList = courses.map((course, id) => (
+    <Course
+      key={id}
+      name={course.name}
+      image={course.image}
+      price={course.price}
+      rating={course.rating}
+      onDelete={handledDelete}
+      id={course.id}
+    />
+  ));
+
+  // spelling correct here
+  return(
+ <>
+ {coursesList}
+ <button onClick={()=>{setDummy(false)}}>Dummy Button</button>
+ </>
+  );
+}
+
+export default CourseList;
+
+//Course.jsx
+
+
+import { useState,useEffect } from "react";
+import PropTypes from "prop-types";
+
+function Course(props) {
+  const [purchased, setPurchased] = useState(false);
+  const [discount, setDiscount] = useState(props.price);
+
+  function BuyCourse(discount) {
+    console.log(props.name, "Purchased with", discount, "% discount");
+    setPurchased(true);
+    // setDiscount(discount - amt);
+  }
+
+
+//   useEffect(()=>{
+//  console.log('Inside course use Effect')
+//  console.log(purchased)
+//  setPurchased(false);
+//   }
+// )
+  
+  return (
+    props.name && (
+      <div className="card">
+        <img src={props.image} alt={props.name} />
+        <h3>{props.name}</h3>
+        <p>{discount}</p>
+        <button onClick={() => BuyCourse(20)}>Buy Now</button>
+        {/* <p>{purchased ? "Already Purchased" : "Get it Now"}</p>     //////// method
+        as Props in share in method in props */}
+        <button onClick={() => props.onDelete(props.id)}>Delete</button>
+      </div>
+    )
+  );
+}
+
+Course.propTypes = {
+  name: PropTypes.string,
+  rating: PropTypes.number,
+  show: PropTypes.bool,
+};
+
+export default Course;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//  import PropTypes  from 'prop-types';
+//  import {useState} from 'react';
+
+// function Course(props) {
+  
+//    // let purchased=false;
+//     const[purchased,setPurchased]=useState(false);
+//     const [discount,setDiscount]=useState(props.price);
+
+
+//   function BuyCourse( amt ){
+//     console.log( props.name,"Purchased  with",discount ,"%  discount")
+//     setPurchased('true');
+//     setDiscount(discount-amt);
+//     console.log(purchased)
+//   }
+
+//  return (  
+//        props.name &&  <div className="card"> 
+//       <img src={props.image} alt={props.name} />
+
+//       <h3>{props.name}</h3>
+//       <p>{discount}</p>
+//       {/* <button onClick={(event)=>BuyCourse(20,event)}>Discount</button> */}
+//       <button onClick={(event) => console.log("Button clicked!")}>
+//   Click Me
+// </button>
+
+//       <p>{purchased?"Already Purchased":"Get it Now"}</p>
+//       <button onClick={(event)=>}></button>
+    
+      
+//     </div>
+//   );
+
+//    }
+
+// Course.propTypes={
+//   name:PropTypes.string,
+//   rating:PropTypes.number,
+//   show:PropTypes.bool,
+//   // image:PropTypes.string,
+//   // price:PropTypes.string,
+
+// };
+
+
+// export default Course;
+
+
+
+
+
+
+// import React from "react";
+// import HTML from "./assets/h.jpg";
+
+// class Course extends React.Component {
+//   render() {
+//     const { name, price, image, rating } = this.props;
+
+//     return (
+//       <div className="card">
+//         <img src={image} alt={name} />
+//         <h3>{name}</h3>
+//         <p>{price}</p>
+//         <p>Rating: {rating}</p>
+//       </div>
+//     );
+//   }
+// }
+
+// Course.defaultProps = {
+//   name: "Code Io Course",
+//   price: "1 Like + 1 Sub",
+//   image: HTML,
+//   rating: 5,
+// };
+
+// export default Course;
+
+
