@@ -1,68 +1,79 @@
 
 
-In React, can fetch data from an API using fetch() inside useEffect so it runs when your component loads.
-Here’s the step-by-step:
+import Course from "./Course";
+// import HTML from "./assets/h.jpg";
+// import css from "./assets/c.jpg";
+// import js from "./assets/js.jpg";
+import {useState,useEffect} from 'react';
 
 
+function CourseList() {
+  const [courses,setCourses] = useState(null);
+ 
+   const [dummy,setDummy]=useState(true);
 
-1. Basic example
 
-import React, { useState, useEffect } from "react";
-
-function App() {
-  const [data, setData] = useState([]); // Store fetched data
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
-
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/posts") // API URL
+    useEffect(()=>{
+    // console.log('useEffect called')  
+    // console.log(dummy);
+    fetch('http://localhost:3000/courses') // this is a get request
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json(); // Convert response to JSON
+        console.log(response);
+        // response.json();
+        return response.json();
       })
-      .then((data) => {
-        setData(data); // Store data in state
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error.message);
-        setLoading(false);
-      });
-  }, []); // [] ? Runs only once when component mounts
+      .then( data=>setCourses(data))
+      .catch((err) => console.error(err));
+    },[]);
 
-  if (loading) return <h2>Loading...</h2>;
-  if (error) return <h2>Error: {error}</h2>;
+    
+    
 
-  return (
-    <div>
-      <h1>Fetched Data</h1>
-      <ul>
-        {data.map((item) => (
-          <li key={item.id}>{item.title}</li>
-        ))}
-      </ul>
-    </div>
+    
+  
+   
+
+
+  // const[dummy,setDummy]=useState([1,2,3]);
+
+  function handledDelete(id){
+    const newCourses=courses.filter((course)=>course.id !=id)
+    setCourses(newCourses)
+  }
+
+  // courses.sort((x,y)=>y.rating - x.rating)    //sorting
+
+
+  // const vfmCourse=courses.filter((course)=> course.price<1000)   //filtering
+
+  if(!courses){
+    return<>
+    </>
+  }
+  
+  
+  
+  const coursesList = courses.map((course, id) => (
+    <Course
+      key={id}
+      name={course.name}
+      image={course.image}
+      price={course.price}
+      rating={course.rating}
+      onDelete={handledDelete}
+      id={course.id}
+    />
+  ));
+
+  // spelling correct here
+  return(
+ <>
+ {coursesList}
+ <button onClick={()=>{setDummy(false)}}>Dummy Button</button>
+ </>
   );
 }
 
-export default App;
+//  <img src={`http://localhost:3000${course.image}`} alt={course.name} />;
 
-
-
-2. Important points
-useEffect ? Runs the fetch when the component is mounted.
-
-Error handling ? Always check response.ok.
-
-State variables ?
-
-data ? store API result
-
-loading ? show spinner/text while fetching
-
-error ? show if request fails
-
-Empty dependency array ([]) ? ensures fetch runs only once.
-
+export default CourseList;
