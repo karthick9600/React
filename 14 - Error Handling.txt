@@ -1,0 +1,104 @@
+In React, error handling means catching problems in your code and showing a safe, user-friendly response instead of letting the app crash or behave unpredictably.
+
+We can handle errors in React mainly in two ways:
+
+1. Handling errors in async code (e.g., API calls)
+
+When fetching data or running async operations, use try...catch (with async/await) or .catch() with promises.
+
+Example:
+
+import { useEffect, useState } from "react";
+
+function App() {
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        let response = await fetch("https://jsonplaceholder.typicode.com/posts");
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        let result = await response.json();
+        setData(result);
+      } catch (err) {
+        setError(err.message);
+      }
+    }
+    fetchData();
+  }, []);
+
+  if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
+
+  return (
+    <div>
+      <h2>Posts</h2>
+      {data.map(post => (
+        <p key={post.id}>{post.title}</p>
+      ))}
+    </div>
+  );
+}
+
+export default App;
+
+
+Key points:
+
+try...catch catches JavaScript runtime errors.
+
+Check response.ok to handle HTTP errors.
+
+2. Handling component render errors (Error Boundaries)
+
+If a React component itself crashes while rendering, use an Error Boundary.
+
+Example:
+
+import React from "react";
+
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, info) {
+    console.error("Error caught in ErrorBoundary:", error, info);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <h2 style={{ color: "red" }}>Something went wrong.</h2>;
+    }
+    return this.props.children;
+  }
+}
+
+export default ErrorBoundary;
+
+
+Usage:
+
+<ErrorBoundary>
+  <MyComponent />
+</ErrorBoundary>
+
+
+Key points:
+
+Error boundaries only catch errors in child components during rendering.
+
+They don’t catch async errors (like API calls) — you still need try...catch for that.
+
+3. Quick Summary Table
+Error Type	How to Handle
+API / async code error	try...catch or .catch()
+Component rendering error	Error Boundary
+Form validation error	Conditional checks + state
