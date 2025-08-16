@@ -1,0 +1,68 @@
+?? Example: Error Boundary in React
+
+?? In React, the best way to handle unexpected errors in components is by using Error Boundaries.
+
+?? Step 1: Create an Error Boundary Component
+import React, { Component } from "react";
+
+class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    // Update state so UI can show fallback
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, info) {
+    // You can log error details to a server
+    console.error("Error caught by ErrorBoundary:", error, info);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return <h2>?? Something went wrong!</h2>;
+    }
+    return this.props.children;
+  }
+}
+
+export default ErrorBoundary;
+
+?? Step 2: Use it in Your App
+import React from "react";
+import ErrorBoundary from "./ErrorBoundary";
+
+function BuggyComponent() {
+  // ? This will cause error
+  throw new Error("I crashed!");
+  return <h1>This will not render</h1>;
+}
+
+function App() {
+  return (
+    <div>
+      <h1>React Error Handling Example</h1>
+      <ErrorBoundary>
+        <BuggyComponent />
+      </ErrorBoundary>
+    </div>
+  );
+}
+
+export default App;
+
+?? Output:
+
+Instead of crashing the whole app, you will see:
+?? Something went wrong!
+
+? Why this is best?
+
+It prevents your app from fully breaking.
+
+Shows a user-friendly message instead of a blank screen.
+
+You can log errors to a monitoring service.
