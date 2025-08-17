@@ -1,0 +1,71 @@
+1. useState — Remembering a value
+useState helps React remember a piece of data in your component.
+
+Example: A counter that increases when you click a button.
+
+javascript
+Copy
+Edit
+import { useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0); // start from 0
+
+  function plus() {
+    setCount(count + 1); // increase count by 1
+  }
+
+  return (
+    <div>
+      <h1>Number: {count}</h1>
+      <button onClick={plus}>Increase</button>
+    </div>
+  );
+}
+
+export default Counter;
+?? How to understand:
+
+count ? current number
+
+setCount() ? changes the number
+
+When you click the button, count changes ? React refreshes the screen automatically.
+
+2. useEffect — Doing something automatically
+useEffect is for doing something after the screen is shown.
+
+Example: Show the current time and update it every second.
+
+javascript
+Copy
+Edit
+import { useState, useEffect } from "react";
+
+function Clock() {
+  const [time, setTime] = useState(new Date().toLocaleTimeString());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date().toLocaleTimeString()); // update time
+    }, 1000);
+
+    return () => clearInterval(timer); // cleanup
+  }, []);
+
+  return <h1>Time: {time}</h1>;
+}
+
+export default Clock;
+?? How to understand:
+
+useEffect(() => {...}, []) ? tells React: "After the screen is shown, do this only once."
+
+Here, it updates the time every 1 second.
+
+React shows the new time automatically.
+
+Quick Memory Table
+Hook	Purpose	Example
+useState	Remember data	Counter number, form input
+useEffect	Do something after screen appears	API calls, timer, messages
