@@ -1,0 +1,83 @@
+1. What is a Custom Hook?
+
+?? A Custom Hook is just a JavaScript function in React whose name starts with use and allows you to reuse logic across multiple components.
+
+React already gives built-in hooks like:
+
+useState
+
+useEffect
+
+useContext
+
+But if you find yourself repeating the same code in multiple components, you can extract it into a Custom Hook.
+
+2. Why Use a Custom Hook?
+
+? Reuse logic across components (no code duplication).
+? Keep components clean and readable.
+? Share stateful logic easily.
+
+3. Example: Create a Custom Hook for Fetching Data
+Step 1 – Create the Hook (useFetch.js)
+import { useState, useEffect } from "react";
+
+const useFetch = (url) => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch(url)
+      .then((response) => {
+        if (!response.ok) {
+          throw Error("Failed to fetch data!");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+        setError(null);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, [url]);
+
+  return { data, loading, error };  // return state
+};
+
+export default useFetch;
+
+Step 2 – Use the Hook in a Component
+import useFetch from "./useFetch";
+
+function CourseList() {
+  const { data: courses, loading, error } = useFetch("http://localhost:3000/courses");
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
+
+  return (
+    <div>
+      <h2>Courses</h2>
+      <ul>
+        {courses.map((course) => (
+          <li key={course.id}>{course.name} - ?{course.price}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default CourseList;
+
+4. Rules for Custom Hooks
+
+? Must start with use (example: useFetch, useAuth).
+? Can use other hooks (useState, useEffect, etc.).
+? Should be reusable and not tied to a specific UI.
+
+?? In short: Custom Hook = Reusable logic in a function starting with use.
