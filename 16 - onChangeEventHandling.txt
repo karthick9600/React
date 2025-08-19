@@ -1,0 +1,95 @@
+In React, the onChange event is mostly used for handling user inputs (like text fields, checkboxes, dropdowns, etc.). It helps us capture the value typed/selected by the user and store it in state.
+
+?? Basic Example: Text Input
+import React, { useState } from "react";
+
+function MyForm() {
+  const [name, setName] = useState("");  // state to store input
+
+  function handleChange(event) {
+    setName(event.target.value);  // update state with input value
+  }
+
+  return (
+    <div>
+      <h2>Enter your name:</h2>
+      <input 
+        type="text" 
+        value={name} 
+        onChange={handleChange}   // event handler
+      />
+      <p>You typed: {name}</p>
+    </div>
+  );
+}
+
+export default MyForm;
+
+
+?? Here:
+
+event.target.value ? gives the input value.
+
+setName() ? updates state whenever input changes.
+
+value={name} ? makes the input a controlled component (React controls the value).
+
+?? Checkbox Example
+import React, { useState } from "react";
+
+function MyCheckbox() {
+  const [isChecked, setIsChecked] = useState(false);
+
+  function handleChange(event) {
+    setIsChecked(event.target.checked); // use checked for checkbox
+  }
+
+  return (
+    <div>
+      <label>
+        <input 
+          type="checkbox" 
+          checked={isChecked} 
+          onChange={handleChange} 
+        />
+        Accept Terms
+      </label>
+      <p>Status: {isChecked ? "Checked" : "Unchecked"}</p>
+    </div>
+  );
+}
+
+export default MyCheckbox;
+
+?? Dropdown Example
+import React, { useState } from "react";
+
+function MySelect() {
+  const [course, setCourse] = useState("React");
+
+  function handleChange(event) {
+    setCourse(event.target.value);
+  }
+
+  return (
+    <div>
+      <select value={course} onChange={handleChange}>
+        <option value="HTML">HTML</option>
+        <option value="CSS">CSS</option>
+        <option value="React">React</option>
+      </select>
+      <p>Selected Course: {course}</p>
+    </div>
+  );
+}
+
+export default MySelect;
+
+
+? Summary
+
+onChange = triggers when input value changes.
+
+Use event.target.value for text/select, event.target.checked for checkbox.
+
+Always connect with useState ? makes it a controlled component.
